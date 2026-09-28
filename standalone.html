@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#004c99">
+  <title>豫豐花園巴士 | NR762</title>
+  <style>
+:root {
+  --bg: #eef2f7;
+  --surface: #ffffff;
+  --text: #1a2332;
+  --muted: #5c6b7f;
+  --primary: #0066cc;
+  --primary-dark: #004c99;
+  --accent: #00a86b;
+  --border: #d5deea;
+  --shadow: 0 4px 20px rgba(26, 35, 50, 0.07);
+  --radius: 14px;
+  --touch: 48px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "PingFang HK", "Microsoft JhengHei", "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.45;
+  padding-bottom: calc(16px + var(--safe-bottom));
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: linear-gradient(135deg, #004c99, #0077e6);
+  color: #fff;
+  padding: calc(10px + var(--safe-top)) calc(12px + var(--safe-right)) 10px calc(12px + var(--safe-left));
+  box-shadow: 0 2px 12px rgba(0, 76, 153, 0.25);
+}
+
+.top-bar-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.top-bar-label {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.top-bar-sub {
+  margin: 2px 0 0;
+  font-size: 0.78rem;
+  opacity: 0.88;
+}
+
+.live-clock {
+  font-size: 0.88rem;
+  font-variant-numeric: tabular-nums;
+  background: rgba(255, 255, 255, 0.16);
+  padding: 6px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 12px calc(12px + var(--safe-right)) 0 calc(12px + var(--safe-left));
+}
+
+.next-hero {
+  background: linear-gradient(160deg, #004c99 0%, #0077e6 50%, #00a86b 100%);
+  color: #fff;
+  border-radius: calc(var(--radius) + 2px);
+  padding: 20px 18px 22px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.next-hero-route {
+  margin: 0 0 4px;
+  font-size: 0.9rem;
+  opacity: 0.92;
+  font-weight: 600;
+}
+
+.next-hero-time {
+  margin: 0;
+  font-size: clamp(3.2rem, 18vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.next-hero-wait {
+  margin: 10px 0 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #b8ffd9;
+}
+
+.next-hero-direction {
+  margin: 8px 0 0;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  box-shadow: var(--shadow);
+  margin-bottom: 12px;
+}
+
+.route-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.route-option,
+.view-tab {
+  border: 1.5px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  border-radius: 12px;
+  min-height: var(--touch);
+  padding: 12px 10px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  font: inherit;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.route-option {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
+
+.route-option strong {
+  font-size: 1rem;
+}
+
+.route-option span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.25;
+}
+
+.route-option.active,
+.view-tab.active {
+  border-color: var(--primary);
+  background: rgba(0, 102, 204, 0.1);
+  color: var(--primary-dark);
+}
+
+.route-option.active span {
+  color: var(--primary-dark);
+  opacity: 0.85;
+}
+
+.view-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.view-tab {
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+
+.upcoming-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.upcoming-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fafcff;
+}
+
+.upcoming-item.highlight {
+  display: none;
+}
+
+.upcoming-time {
+  font-size: 1.35rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.upcoming-meta {
+  color: var(--muted);
+  font-size: 0.82rem;
+  margin-top: 2px;
+}
+
+.upcoming-wait {
+  text-align: right;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.timetable-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.time-cell {
+  text-align: center;
+  padding: 12px 4px;
+  border-radius: 10px;
+  background: #f7faff;
+  border: 1px solid var(--border);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  font-size: 0.95rem;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.time-cell.next {
+  background: rgba(0, 168, 107, 0.18);
+  border-color: var(--accent);
+  color: #006644;
+  box-shadow: 0 0 0 2px rgba(0, 168, 107, 0.2);
+}
+
+.time-cell.past {
+  opacity: 0.38;
+}
+
+.time-cell.cancelled {
+  opacity: 0.3;
+  text-decoration: line-through;
+  background: #f0f0f0;
+}
+
+#timetable-caption {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.remarks-details {
+  padding: 0;
+  overflow: hidden;
+}
+
+.remarks-details summary {
+  padding: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  min-height: var(--touch);
+  display: flex;
+  align-items: center;
+  list-style: none;
+}
+
+.remarks-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.remarks-details summary::before {
+  content: "▸";
+  margin-right: 8px;
+  color: var(--muted);
+}
+
+.remarks-details[open] summary::before {
+  content: "▾";
+}
+
+.remarks-list {
+  margin: 0;
+  padding: 0 14px 0 28px;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.remarks-list li + li {
+  margin-top: 8px;
+}
+
+.footer-note {
+  margin: 12px 14px 14px;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.empty {
+  color: var(--muted);
+  margin: 0;
+  text-align: center;
+  padding: 20px 0;
+}
+
+@media (min-width: 480px) {
+  .route-option span {
+    font-size: 0.85rem;
+  }
+
+  .timetable-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 640px) {
+  .page {
+    padding-top: 16px;
+  }
+
+  .next-hero {
+    padding: 28px 24px;
+  }
+
+  .panel {
+    padding: 18px;
+  }
+
+  .timetable-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+  </style>
+</head>
+<body>
+
+  <header class="top-bar">
+    <div class="top-bar-inner">
+      <div>
+        <p class="top-bar-label">豫豐花園居民巴士</p>
+        <p class="top-bar-sub">一至日及公眾假期</p>
+      </div>
+      <time class="live-clock" id="live-clock" aria-live="polite"></time>
+    </div>
+  </header>
+  <main class="page">
+    <section class="next-hero" id="next-hero" aria-live="polite">
+      <p class="next-hero-route" id="hero-route">—</p>
+      <p class="next-hero-time" id="hero-time">--:--</p>
+      <p class="next-hero-wait" id="hero-wait">—</p>
+      <p class="next-hero-direction" id="hero-direction">—</p>
+    </section>
+    <section class="panel">
+      <div class="route-options" id="route-options"></div>
+    </section>
+    <section class="panel results-panel">
+      <div class="view-tabs" role="tablist">
+        <button type="button" class="view-tab active" data-view="next" role="tab">之後班次</button>
+        <button type="button" class="view-tab" data-view="full" role="tab">完整時刻表</button>
+      </div>
+      <div id="next-panel" role="tabpanel">
+        <div class="upcoming-list" id="next-cards"></div>
+      </div>
+      <div id="full-panel" hidden role="tabpanel">
+        <p id="timetable-caption"></p>
+        <div class="timetable-grid" id="timetable-grid"></div>
+      </div>
+    </section>
+    <details class="remarks-details panel">
+      <summary>備註及查詢熱線</summary>
+      <ul class="remarks-list" id="remarks-list"></ul>
+      <p class="footer-note">查詢熱線 <a href="tel:35154088">3515 4088</a></p>
+    </details>
+  </main>
+
+  <script>
+/** 豫豐花園居民巴士 NR762 / NR762A 時刻表資料 */
+const TIMETABLE = {
+  meta: {
+    estate: "豫豐花園",
+    estateEn: "The Sherwood",
+    scheduleNote: "星期一至日及公眾假期適用",
+    hotline: "3515 4088",
+    updatedFrom: "IMG_6187.HEIC",
+  },
+  routes: {
+    NR762: {
+      id: "NR762",
+      name: "NR762",
+      label: "豫豐花園 ↔ 港鐵兆康站",
+      labelEn: "The Sherwood ↔ MTR Siu Hong Station",
+      directions: {
+        to_siu_hong: {
+          label: "豫豐花園 → 兆康站",
+          labelEn: "The Sherwood → Siu Hong Station",
+          from: "豫豐花園",
+          to: "兆康站",
+          times: [
+            "06:15", "06:30", "06:45", "07:00", "07:15", "07:30", "07:45", "08:00",
+            "08:15", "08:30", "08:45", "09:00", "10:05", "10:20", "10:40", "11:00", "11:20",
+            "11:40", "12:00", "14:05", "14:20", "14:40", "15:00", "15:20", "15:40",
+            "16:00", "18:15", "18:30", "18:45", "19:00", "19:15", "19:30", "19:45",
+            "21:15", "21:45", "22:00",
+          ],
+          cancelled: ["08:45"],
+        },
+        from_siu_hong: {
+          label: "兆康站 → 豫豐花園",
+          labelEn: "Siu Hong Station → The Sherwood",
+          from: "兆康站",
+          to: "豫豐花園",
+          times: [
+            "06:20", "06:35", "06:50", "07:05", "07:20", "07:35", "07:50", "08:05",
+            "08:20", "08:35", "08:50", "09:05", "10:10", "10:25", "10:45", "11:05", "11:25",
+            "11:45", "12:05", "14:10", "14:25", "14:45", "15:05", "15:25", "15:45",
+            "16:05", "18:20", "18:35", "18:50", "19:05", "19:20", "19:35", "19:50",
+            "21:20", "21:50", "22:05",
+          ],
+          cancelled: ["08:50"],
+        },
+      },
+    },
+    NR762A: {
+      id: "NR762A",
+      name: "NR762A",
+      label: "豫豐花園 ↔ 屯門市中心",
+      labelEn: "The Sherwood ↔ Tuen Mun Town Centre",
+      directions: {
+        to_tuen_mun: {
+          label: "豫豐花園 → 屯門市中心",
+          labelEn: "The Sherwood → Tuen Mun Town Centre",
+          from: "豫豐花園",
+          to: "屯門市中心",
+          times: [
+            "07:30", "08:00", "08:30", "09:00", "09:15", "09:30", "09:45", "10:00",
+            "10:30", "11:00", "11:30", "12:00", "12:15", "12:30", "12:45", "13:00",
+            "13:15", "13:30", "13:45", "14:00", "14:30", "15:00", "15:30", "16:00",
+            "16:15", "16:30", "16:45", "17:00", "17:15", "17:30", "17:45", "18:00",
+            "19:30", "20:00", "20:15", "20:30", "20:45", "21:00", "21:30", "22:00",
+            "22:15", "22:30", "22:45", "23:00", "23:15",
+          ],
+          cancelled: [],
+        },
+        from_tuen_mun: {
+          label: "屯門市中心 → 豫豐花園",
+          labelEn: "Tuen Mun Town Centre → The Sherwood",
+          from: "屯門市中心",
+          to: "豫豐花園",
+          times: [
+            "07:40", "08:10", "08:40", "09:10", "09:25", "09:40", "09:55", "10:10",
+            "10:40", "11:10", "11:40", "12:10", "12:25", "12:40", "12:55", "13:10",
+            "13:25", "13:40", "13:55", "14:10", "14:40", "15:10", "15:40", "16:10",
+            "16:25", "16:40", "16:55", "17:10", "17:25", "17:40", "17:55", "18:10",
+            "19:40", "20:10", "20:25", "20:40", "20:55", "21:10", "21:40", "22:10",
+            "22:25", "22:40", "22:55", "23:10", "23:30",
+          ],
+          cancelled: [],
+        },
+      },
+    },
+  },
+  remarks: [
+    "班次可能因交通情況而調整，恕不另行通知。",
+    "為避免阻塞交通，巴士不會在屯門市中心及兆康站等候。",
+    "乘客上車時須出示有效居民證，並以八達通繳付車費。",
+    "八號或以上颱風信號或黑色暴雨警告生效時，服務於信號發出前一小時起有限度運作，其後暫停；信號取消後兩小時恢復正常服務（視乎路面情況而定）。",
+    "查詢請致電 24 小時保安控制中心：3515 4088。",
+  ],
+};
+
+const ROUTE_OPTIONS = [
+  { id: "nr762-out", routeId: "NR762", directionKey: "to_siu_hong", route: "NR762", direction: "豫豐花園 → 兆康站" },
+  { id: "nr762-in", routeId: "NR762", directionKey: "from_siu_hong", route: "NR762", direction: "兆康站 → 豫豐花園" },
+  { id: "nr762a-out", routeId: "NR762A", directionKey: "to_tuen_mun", route: "NR762A", direction: "豫豐花園 → 屯門市中心" },
+  { id: "nr762a-in", routeId: "NR762A", directionKey: "from_tuen_mun", route: "NR762A", direction: "屯門市中心 → 豫豐花園" },
+];
+
+const state = {
+  optionId: "nr762-out",
+  view: "next",
+};
+
+function getSelection() {
+  return ROUTE_OPTIONS.find((o) => o.id === state.optionId) || ROUTE_OPTIONS[0];
+}
+
+function parseTime(timeStr) {
+  const [h, m] = timeStr.split(":").map(Number);
+  return h * 60 + m;
+}
+
+function getNowMinutes() {
+  const now = new Date();
+  return now.getHours() * 60 + now.getMinutes();
+}
+
+function getActiveTimes(routeId, directionKey) {
+  const direction = TIMETABLE.routes[routeId].directions[directionKey];
+  const cancelled = new Set(direction.cancelled || []);
+  return direction.times.filter((t) => !cancelled.has(t));
+}
+
+function getNextBuses(routeId, directionKey, count = 4) {
+  const times = getActiveTimes(routeId, directionKey);
+  const now = getNowMinutes();
+  const upcoming = times.filter((t) => parseTime(t) >= now);
+  const result = upcoming.slice(0, count);
+
+  if (result.length < count) {
+    result.push(...times.slice(0, count - result.length));
+  }
+
+  return result.map((time) => {
+    let diff = parseTime(time) - now;
+    if (diff < 0) diff += 24 * 60;
+    return { time, minutesAway: diff, isTomorrow: parseTime(time) < now };
+  });
+}
+
+function formatWaitText(bus, index) {
+  if (bus.minutesAway === 0) return "即將開出";
+  if (bus.isTomorrow && index > 0) return `約 ${bus.minutesAway} 分鐘（翌日）`;
+  if (bus.minutesAway < 60) return `約 ${bus.minutesAway} 分鐘`;
+  const h = Math.floor(bus.minutesAway / 60);
+  const m = bus.minutesAway % 60;
+  return m ? `約 ${h} 小時 ${m} 分鐘` : `約 ${h} 小時`;
+}
+
+function renderRouteOptions() {
+  const container = document.getElementById("route-options");
+  container.innerHTML = "";
+
+  ROUTE_OPTIONS.forEach((opt) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = `route-option${state.optionId === opt.id ? " active" : ""}`;
+    btn.innerHTML = `<strong>${opt.route}</strong><span>${opt.direction}</span>`;
+    btn.addEventListener("click", () => {
+      state.optionId = opt.id;
+      render();
+    });
+    container.appendChild(btn);
+  });
+}
+
+function renderNextHero(nextBuses, selection) {
+  const next = nextBuses[0];
+  document.getElementById("hero-route").textContent = selection.route;
+  document.getElementById("hero-time").textContent = next ? next.time : "--:--";
+  document.getElementById("hero-wait").textContent = next ? formatWaitText(next, 0) : "今日已無班次";
+  document.getElementById("hero-direction").textContent = selection.direction;
+}
+
+function renderResults() {
+  const selection = getSelection();
+  const nextBuses = getNextBuses(selection.routeId, selection.directionKey, 4);
+
+  renderNextHero(nextBuses, selection);
+
+  const cards = document.getElementById("next-cards");
+  cards.innerHTML = "";
+
+  nextBuses.slice(1).forEach((bus, index) => {
+    const item = document.createElement("article");
+    item.className = "upcoming-item";
+    item.innerHTML = `
+      <div>
+        <div class="upcoming-time">${bus.time}</div>
+        <div class="upcoming-meta">第 ${index + 2} 班</div>
+      </div>
+      <div class="upcoming-wait">${formatWaitText(bus, index + 1)}</div>
+    `;
+    cards.appendChild(item);
+  });
+
+  if (nextBuses.length <= 1) {
+    cards.innerHTML = `<p class="empty">${nextBuses.length === 0 ? "今日此方向已無班次" : "之後再無其他班次"}</p>`;
+  }
+}
+
+function renderTimetable() {
+  const selection = getSelection();
+  const direction = TIMETABLE.routes[selection.routeId].directions[selection.directionKey];
+  const cancelled = new Set(direction.cancelled || []);
+  const now = getNowMinutes();
+  const grid = document.getElementById("timetable-grid");
+  grid.innerHTML = "";
+
+  direction.times.forEach((time) => {
+    const cell = document.createElement("div");
+    const isCancelled = cancelled.has(time);
+    const isPast = !isCancelled && parseTime(time) < now;
+    const isNext =
+      !isCancelled &&
+      time === getNextBuses(selection.routeId, selection.directionKey, 1)[0]?.time;
+
+    cell.className = [
+      "time-cell",
+      isCancelled ? "cancelled" : "",
+      isPast ? "past" : "",
+      isNext ? "next" : "",
+    ]
+      .filter(Boolean)
+      .join(" ");
+    cell.textContent = time;
+    if (isCancelled) cell.title = "已取消";
+    grid.appendChild(cell);
+  });
+
+  document.getElementById("timetable-caption").textContent =
+    `${selection.route} · ${selection.direction}（共 ${getActiveTimes(selection.routeId, selection.directionKey).length} 班）`;
+}
+
+function renderRemarks() {
+  document.getElementById("remarks-list").innerHTML =
+    TIMETABLE.remarks.map((r) => `<li>${r}</li>`).join("");
+}
+
+function bindControls() {
+  document.querySelectorAll("[data-view]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      state.view = btn.dataset.view;
+      document.querySelectorAll("[data-view]").forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      document.getElementById("next-panel").hidden = state.view !== "next";
+      document.getElementById("full-panel").hidden = state.view !== "full";
+    });
+  });
+}
+
+function renderClock() {
+  const el = document.getElementById("live-clock");
+  const tick = () => {
+    el.textContent = new Date().toLocaleString("zh-HK", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+  };
+  tick();
+  setInterval(tick, 1000);
+}
+
+function render() {
+  renderRouteOptions();
+  renderResults();
+  renderTimetable();
+  renderRemarks();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  bindControls();
+  renderClock();
+  render();
+  setInterval(() => {
+    renderResults();
+    renderTimetable();
+  }, 30000);
+});
+
+  </script>
+</body>
+</html>
