@@ -19,10 +19,8 @@ python -m http.server 8765
 1. 修改 `js/data.js`
 2. 若需同步 standalone 版本：`python build_standalone.py`
 
-## GitHub Pages 部署
+## GitHub Pages
 
-推送到 `main` 分支後，GitHub Actions 會自動部署網站。
+網站：https://tam0911.github.io/nr762-timetable/
 
-首次使用請在 GitHub repository **Settings → Pages → Build and deployment** 確認來源為 **GitHub Actions**。
-
-公開網址格式：`https://<你的帳號>.github.io/nr762-timetable/`
+推送到 `main` 分支後會自動更新。
