@@ -1,13 +1,19 @@
 :root {
-  --bg: #eef2f7;
-  --surface: #ffffff;
-  --text: #1a2332;
-  --muted: #5c6b7f;
-  --primary: #0066cc;
-  --primary-dark: #004c99;
-  --accent: #00a86b;
-  --border: #d5deea;
-  --shadow: 0 4px 20px rgba(26, 35, 50, 0.07);
+  --bg: #393939;
+  --surface: #454545;
+  --surface-raised: #505050;
+  --text: #f2f2f2;
+  --muted: #b8b8b8;
+  --primary: #4da3ff;
+  --primary-dark: #7bb8ff;
+  --accent: #3dd68c;
+  --orange-dark: #d44a07;
+  --orange: #ff5a09;
+  --orange-light: #ff8c42;
+  --selected: var(--orange);
+  --selected-text: #fff2c6;
+  --border: #5c5c5c;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
   --radius: 14px;
   --touch: 48px;
   --safe-top: env(safe-area-inset-top, 0px);
@@ -43,10 +49,10 @@ a {
   position: sticky;
   top: 0;
   z-index: 20;
-  background: linear-gradient(135deg, #004c99, #0077e6);
-  color: #fff;
+  background: linear-gradient(135deg, var(--orange-dark), var(--orange-light));
+  color: var(--selected-text);
   padding: calc(10px + var(--safe-top)) calc(12px + var(--safe-right)) 10px calc(12px + var(--safe-left));
-  box-shadow: 0 2px 12px rgba(0, 76, 153, 0.25);
+  box-shadow: 0 2px 12px rgba(255, 90, 9, 0.35);
 }
 
 .top-bar-inner {
@@ -71,9 +77,10 @@ a {
 }
 
 .live-clock {
-  font-size: 0.88rem;
+  font-size: calc(0.88rem + 3px);
   font-variant-numeric: tabular-nums;
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 242, 198, 0.22);
+  color: var(--selected-text);
   padding: 6px 10px;
   border-radius: 999px;
   white-space: nowrap;
@@ -87,8 +94,8 @@ a {
 }
 
 .next-hero {
-  background: linear-gradient(160deg, #004c99 0%, #0077e6 50%, #00a86b 100%);
-  color: #fff;
+  background: linear-gradient(160deg, var(--orange-dark) 0%, var(--orange) 50%, var(--orange-light) 100%);
+  color: var(--selected-text);
   border-radius: calc(var(--radius) + 2px);
   padding: 20px 18px 22px;
   margin-bottom: 12px;
@@ -116,7 +123,7 @@ a {
   margin: 10px 0 0;
   font-size: 1.15rem;
   font-weight: 700;
-  color: #b8ffd9;
+  color: #fff;
 }
 
 .next-hero-direction {
@@ -143,7 +150,7 @@ a {
 .route-option,
 .view-tab {
   border: 1.5px solid var(--border);
-  background: #fff;
+  background: var(--surface-raised);
   color: var(--text);
   border-radius: 12px;
   min-height: var(--touch);
@@ -175,14 +182,14 @@ a {
 
 .route-option.active,
 .view-tab.active {
-  border-color: var(--primary);
-  background: rgba(0, 102, 204, 0.1);
-  color: var(--primary-dark);
+  border-color: var(--selected);
+  background: var(--selected);
+  color: var(--selected-text);
 }
 
 .route-option.active span {
-  color: var(--primary-dark);
-  opacity: 0.85;
+  color: var(--selected-text);
+  opacity: 0.95;
 }
 
 .view-tabs {
@@ -211,7 +218,7 @@ a {
   padding: 14px 14px;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: #fafcff;
+  background: var(--surface-raised);
 }
 
 .upcoming-item.highlight {
@@ -248,7 +255,7 @@ a {
   text-align: center;
   padding: 12px 4px;
   border-radius: 10px;
-  background: #f7faff;
+  background: var(--surface-raised);
   border: 1px solid var(--border);
   font-variant-numeric: tabular-nums;
   font-weight: 700;
@@ -260,10 +267,10 @@ a {
 }
 
 .time-cell.next {
-  background: rgba(0, 168, 107, 0.18);
+  background: rgba(61, 214, 140, 0.2);
   border-color: var(--accent);
-  color: #006644;
-  box-shadow: 0 0 0 2px rgba(0, 168, 107, 0.2);
+  color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(61, 214, 140, 0.25);
 }
 
 .time-cell.past {
@@ -273,7 +280,7 @@ a {
 .time-cell.cancelled {
   opacity: 0.3;
   text-decoration: line-through;
-  background: #f0f0f0;
+  background: #333333;
 }
 
 #timetable-caption {
