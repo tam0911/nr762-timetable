@@ -29,6 +29,7 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  background: var(--bg);
 }
 
 body {
@@ -350,6 +351,85 @@ a {
   .timetable-grid {
     grid-template-columns: repeat(4, 1fr);
   }
+}
+
+.net-status {
+  margin: 0 0 12px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #3a332c;
+  color: var(--selected-text);
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.install-hint {
+  position: fixed;
+  z-index: 40;
+  left: 50%;
+  bottom: calc(12px + var(--safe-bottom));
+  transform: translateX(-50%);
+  width: min(616px, calc(100% - 24px - var(--safe-left) - var(--safe-right)));
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--orange);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 14px 14px 12px;
+}
+
+.install-hint-title {
+  margin: 0;
+  font-weight: 800;
+  color: var(--orange-light);
+}
+
+.install-hint-text {
+  margin: 6px 0 0;
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.share-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  margin: 0 4px;
+  vertical-align: -5px;
+  color: var(--selected-text);
+  background: var(--orange);
+  border-radius: 6px;
+}
+
+.install-hint-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.install-hint-action {
+  min-height: var(--touch);
+  min-width: 96px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--orange);
+  color: var(--selected-text);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+body.has-install-hint {
+  padding-bottom: calc(200px + var(--safe-bottom));
+}
+
+html.is-standalone body {
+  min-height: 100dvh;
 }
 
 @media (min-width: 640px) {

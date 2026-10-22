@@ -4,6 +4,7 @@ root = Path(__file__).parent
 css = (root / "css" / "style.css").read_text(encoding="utf-8")
 data = (root / "js" / "data.js").read_text(encoding="utf-8")
 app = (root / "js" / "app.js").read_text(encoding="utf-8")
+pwa = (root / "js" / "pwa.js").read_text(encoding="utf-8")
 
 body = """
   <header class="top-bar">
@@ -46,26 +47,34 @@ body = """
   </main>
 """
 
-html = f"""<!DOCTYPE html>
+html = """<!DOCTYPE html>
 <html lang="zh-HK">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#004c99">
+  <meta name="theme-color" content="#ff5a09">
   <title>豫豐花園巴士 | NR762</title>
   <style>
-{css}
+__CSS__
   </style>
 </head>
 <body>
-{body}
+__BODY__
   <script>
-{data}
-{app}
+__DATA__
+__APP__
+__PWA__
   </script>
 </body>
 </html>
 """
+html = (
+    html.replace("__CSS__", css)
+    .replace("__BODY__", body)
+    .replace("__DATA__", data)
+    .replace("__APP__", app)
+    .replace("__PWA__", pwa)
+)
 
 (root / "standalone.html").write_text(html, encoding="utf-8")
 
